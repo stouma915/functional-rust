@@ -1,4 +1,4 @@
-use crate::{Applicative, Apply, Functor, Semigroup};
+use crate::{Applicative, Apply, Functor, Monoid, Semigroup};
 
 impl<T> Applicative for Option<T> {
     fn pure<A>(x: A) -> Self::F<A> {
@@ -23,6 +23,12 @@ impl<T> Functor for Option<T> {
             Some(a) => Some(op(a)),
             None => None,
         }
+    }
+}
+
+impl<T: Semigroup<T> + Copy> Monoid<Option<T>> for Option<T> {
+    fn zero() -> Option<T> {
+        None
     }
 }
 

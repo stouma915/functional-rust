@@ -32,3 +32,7 @@ pub trait Applicative: Apply {
 pub trait Semigroup<A> {
     fn combine(x: A, y: A) -> A;
 }
+
+pub trait Monoid<A>: Semigroup<A> {
+    fn zero() -> A;
+}

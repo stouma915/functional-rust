@@ -1,4 +1,4 @@
-use crate::{Applicative, Apply, Functor, Semigroup};
+use crate::{Applicative, Apply, Functor, Monoid, Semigroup};
 
 impl<T> Applicative for Vec<T> {
     fn pure<A>(x: A) -> Self::F<A> {
@@ -29,6 +29,12 @@ impl<T> Functor for Vec<T> {
         }
 
         mapped
+    }
+}
+
+impl<T> Monoid<Vec<T>> for Vec<T> {
+    fn zero() -> Vec<T> {
+        vec![]
     }
 }
 
