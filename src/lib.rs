@@ -36,3 +36,7 @@ pub trait Semigroup<A> {
 pub trait Monoid<A>: Semigroup<A> {
     fn zero() -> A;
 }
+
+pub trait FlatMap: Apply {
+    fn flatmap<A, B>(fa: Self::F<A>, op: fn(A) -> Self::F<B>) -> Self::F<B>;
+}
