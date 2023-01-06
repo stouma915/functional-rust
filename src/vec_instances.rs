@@ -1,4 +1,4 @@
-use crate::{Applicative, Apply, Functor};
+use crate::{Applicative, Apply, Functor, Semigroup};
 
 impl<T> Applicative for Vec<T> {
     fn pure<A>(x: A) -> Self::F<A> {
@@ -29,5 +29,20 @@ impl<T> Functor for Vec<T> {
         }
 
         mapped
+    }
+}
+
+impl<T> Semigroup<Vec<T>> for Vec<T> {
+    fn combine(x: Vec<T>, y: Vec<T>) -> Vec<T> {
+        let mut appended = vec![];
+
+        for ex in x {
+            appended.push(ex);
+        }
+        for ey in y {
+            appended.push(ey);
+        }
+
+        appended
     }
 }

@@ -1,4 +1,4 @@
-use crate::{Applicative, Apply, Functor};
+use crate::{Applicative, Apply, Functor, Semigroup};
 
 impl<T> Applicative for Option<T> {
     fn pure<A>(x: A) -> Self::F<A> {
@@ -22,6 +22,18 @@ impl<T> Functor for Option<T> {
         match fa {
             Some(a) => Some(op(a)),
             None => None,
+        }
+    }
+}
+
+impl<T: Semigroup<T> + Copy> Semigroup<Option<T>> for Option<T> {
+    fn combine(x: Option<T>, y: Option<T>) -> Option<T> {
+        match x {
+            Some(a) => match y {
+                Some(b) => Some(T::combine(a, b)),
+                None => x.clone(),
+            },
+            None => y,
         }
     }
 }
