@@ -1,4 +1,10 @@
-use crate::{Apply, Functor};
+use crate::{Applicative, Apply, Functor};
+
+impl<T> Applicative for Vec<T> {
+    fn pure<A>(x: A) -> Self::F<A> {
+        vec![x]
+    }
+}
 
 impl<T> Apply for Vec<T> {
     fn apply<A: Clone, B>(fa: Self::F<A>, ff: Self::F<fn(A) -> B>) -> Self::F<B> {
