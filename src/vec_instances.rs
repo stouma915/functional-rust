@@ -1,4 +1,16 @@
-use crate::Functor;
+use crate::{Apply, Functor};
+
+impl<T> Apply for Vec<T> {
+    fn apply<A: Clone, B>(fa: Self::F<A>, ff: Self::F<fn(A) -> B>) -> Self::F<B> {
+        let mut mapped: Vec<B> = vec![];
+
+        for op in ff {
+            mapped.append(&mut Self::fmap(fa.clone(), op));
+        }
+
+        mapped
+    }
+}
 
 impl<T> Functor for Vec<T> {
     type F<A> = Vec<A>;
