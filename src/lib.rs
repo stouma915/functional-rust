@@ -24,3 +24,9 @@ pub trait Equ<A> {
         !Self::eqv(x, y)
     }
 }
+
+pub trait Functor {
+    type F<A>;
+
+    fn fmap<A, B>(fa: Self::F<A>, op: fn(&A) -> B) -> Self::F<B>;
+}
