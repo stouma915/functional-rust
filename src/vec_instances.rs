@@ -17,7 +17,13 @@ impl<T: PartialEq> Equ<Vec<T>> for Vec<T> {
 impl<T> Functor for Vec<T> {
     type F<A> = Vec<A>;
 
-    fn fmap<A, B>(fa: Self::F<A>, op: fn(&A) -> B) -> Self::F<B> {
-        fa.iter().map(op).collect()
+    fn fmap<A, B>(fa: Self::F<A>, op: fn(A) -> B) -> Self::F<B> {
+        let mut mapped = vec![];
+
+        for a in fa {
+            mapped.push(op(a));
+        }
+
+        mapped
     }
 }
