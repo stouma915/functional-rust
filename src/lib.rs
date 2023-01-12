@@ -18,7 +18,7 @@ mod vec_instances;
 pub trait Functor {
     type F<A>;
 
-    fn fmap<A, B, FN: FnOnce(A) -> B>(fa: Self::F<A>, op: FN) -> Self::F<B>;
+    fn fmap<A, B, FN: FnOnce(A) -> B + Copy>(fa: Self::F<A>, op: FN) -> Self::F<B>;
 }
 
 pub trait Apply: Functor {

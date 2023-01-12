@@ -18,7 +18,7 @@ impl<T> Apply for Option<T> {
 impl<T> Functor for Option<T> {
     type F<A> = Option<A>;
 
-    fn fmap<A, B, FN: FnOnce(A) -> B>(fa: Self::F<A>, op: FN) -> Self::F<B> {
+    fn fmap<A, B, FN: FnOnce(A) -> B + Copy>(fa: Self::F<A>, op: FN) -> Self::F<B> {
         match fa {
             Some(a) => Some(op(a)),
             None => None,
