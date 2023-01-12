@@ -22,7 +22,7 @@ pub trait Functor {
 }
 
 pub trait Apply: Functor {
-    fn apply<A: Clone, B, FN: FnOnce(A) -> B>(fa: Self::F<A>, ff: Self::F<FN>) -> Self::F<B>;
+    fn apply<A: Clone, B, FN: FnOnce(A) -> B + Copy>(fa: Self::F<A>, ff: Self::F<FN>) -> Self::F<B>;
 }
 
 pub trait Applicative: Apply {
