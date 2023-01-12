@@ -7,7 +7,7 @@ impl<T> Applicative for Vec<T> {
 }
 
 impl<T> Apply for Vec<T> {
-    fn apply<A: Clone, B>(fa: Self::F<A>, ff: Self::F<fn(A) -> B>) -> Self::F<B> {
+    fn apply<A: Clone, B, FN: FnOnce(A) -> B>(fa: Self::F<A>, ff: Self::F<FN>) -> Self::F<B> {
         let mut mapped: Vec<B> = vec![];
 
         for op in ff {
@@ -21,7 +21,7 @@ impl<T> Apply for Vec<T> {
 impl<T> Functor for Vec<T> {
     type F<A> = Vec<A>;
 
-    fn fmap<A, B>(fa: Self::F<A>, op: fn(A) -> B) -> Self::F<B> {
+    fn fmap<A, B, FN: FnOnce(A) -> B>(fa: Self::F<A>, op: FN) -> Self::F<B> {
         let mut mapped = vec![];
 
         for a in fa {

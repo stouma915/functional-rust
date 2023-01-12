@@ -7,7 +7,7 @@ impl<T> Applicative for Option<T> {
 }
 
 impl<T> Apply for Option<T> {
-    fn apply<A, B>(fa: Self::F<A>, ff: Self::F<fn(A) -> B>) -> Self::F<B> {
+    fn apply<A, B, FN: FnOnce(A) -> B>(fa: Self::F<A>, ff: Self::F<FN>) -> Self::F<B> {
         match ff {
             Some(op) => Self::fmap(fa, op),
             None => None,
@@ -18,7 +18,7 @@ impl<T> Apply for Option<T> {
 impl<T> Functor for Option<T> {
     type F<A> = Option<A>;
 
-    fn fmap<A, B>(fa: Self::F<A>, op: fn(A) -> B) -> Self::F<B> {
+    fn fmap<A, B, FN: FnOnce(A) -> B>(fa: Self::F<A>, op: FN) -> Self::F<B> {
         match fa {
             Some(a) => Some(op(a)),
             None => None,
