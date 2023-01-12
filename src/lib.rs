@@ -18,11 +18,11 @@ mod vec_instances;
 pub trait Functor {
     type F<A>;
 
-    fn fmap<A, B>(fa: Self::F<A>, op: fn(A) -> B) -> Self::F<B>;
+    fn fmap<A, B, FN: FnOnce(A) -> B>(fa: Self::F<A>, op: FN) -> Self::F<B>;
 }
 
 pub trait Apply: Functor {
-    fn apply<A: Clone, B>(fa: Self::F<A>, ff: Self::F<fn(A) -> B>) -> Self::F<B>;
+    fn apply<A: Clone, B, FN: FnOnce(A) -> B>(fa: Self::F<A>, ff: Self::F<FN>) -> Self::F<B>;
 }
 
 pub trait Applicative: Apply {
@@ -38,5 +38,5 @@ pub trait Monoid<A>: Semigroup<A> {
 }
 
 pub trait FlatMap: Apply {
-    fn flatmap<A, B>(fa: Self::F<A>, op: fn(A) -> Self::F<B>) -> Self::F<B>;
+    fn flatmap<A, B, FN: FnOnce(A) -> Self::F<B>>(fa: Self::F<A>, op: FN) -> Self::F<B>;
 }
