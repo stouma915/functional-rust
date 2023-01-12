@@ -6,7 +6,7 @@ use functional_rust::Apply;
 fn t_option() {
     assert_eq!(Option::<i8>::apply(Some(1), Some(|x| x + 1)), Some(2));
     assert_eq!(Option::<i8>::apply(None, Some(|x: i8| x + 1)), None);
-    assert_eq!(Option::<i8>::apply(Some(1), None as Option<i8>), None as Option<i8>);
+    assert_eq!(Option::<i8>::apply(Some(1), None as Option<fn(i8) -> i8>), None as Option<i8>);
 }
 
 #[test]
